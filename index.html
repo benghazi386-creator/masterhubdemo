@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">JTD Air-Conditioning & Refrigeration</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --green-dark: #0a2014;
+  --green: #145228;
+  --green-mid: #186b33;
+  --green-light: #1e8c44;
+  --green-pale: #e6f4ec;
+  --white: #ffffff;
+  --off-white: #f6faf7;
+  --text: #111111;
+  --text-mid: #333333;
+  --text-light: #595959;
+  --border: #d0dbd4;
+  --red: #c0392b;
+  --shadow: 0 2px 20px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+  --focus: #2563eb;
+  --min-touch: 48px;
+}
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  html { scroll-behavior: auto; }
+}
+/* Skip to main content */
+.skip-link { position: absolute; top: -100px; left: 1rem; background: var(--focus); color: white; padding: 12px 20px; border-radius: 6px; font-weight: 700; font-size: 1rem; text-decoration: none; z-index: 9999; transition: top 0.2s; }
+.skip-link:focus { top: 1rem; }
+/* Global focus styles - visible for keyboard users */
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--white); color: var(--text); overflow-x: hidden; font-size: 1rem; line-height: 1.5; }
+
+/* ── EMERGENCY BAR ── */
+.emergency-bar {
+  background: var(--red);
+  padding: 10px 5%;
+  display: flex; align-items: center; justify-content: center; gap: 1rem;
+  flex-wrap: wrap;
+}
+.emergency-bar p {
+  color: white; font-size: 1rem; font-weight: 600; letter-spacing: 0.02em;
+  display: flex; align-items: center; gap: 8px;
+}
+.emergency-bar .pulse { /* decorative */
+  width: 8px; height: 8px; background: white; border-radius: 50%;
+  animation: pulse 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.7)} }
+.emergency-btn {
+  background: white; color: var(--red);
+  padding: 12px 22px; border-radius: 6px;
+  font-size: 1rem; font-weight: 700; text-decoration: none;
+  white-space: nowrap; transition: all 0.2s;
+  letter-spacing: 0.03em; min-height: var(--min-touch);
+  display: inline-flex; align-items: center;
+}
+.emergency-btn:hover { background: #fff0f0; transform: translateY(-1px); }
+
+/* ── NAV ── */
+nav {
+  background: var(--green-dark);
+  padding: 0 5%;
+  height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none;
+}
+.nav-logo-icon {
+  width: 40px; height: 40px; background: var(--green-light);
+  border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.nav-logo-text { display: flex; flex-direction: column; }
+.nav-logo-name { font-size: 1rem; font-weight: 800; color: white; line-height: 1.1; letter-spacing: 0.01em; }
+.nav-logo-sub { font-size: 0.75rem; font-weight: 400; color: rgba(255,255,255,0.75); letter-spacing: 0.05em; text-transform: uppercase; }
+.nav-links { display: flex; align-items: center; gap: 0.25rem; list-style: none; }
+.nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; font-size: 0.9rem; font-weight: 500; padding: 12px 16px; border-radius: 6px; transition: all 0.2s; min-height: var(--min-touch); display: flex; align-items: center; }
+.nav-links a:hover { color: white; background: rgba(255,255,255,0.08); }
+.nav-call { background: var(--green-light) !important; color: white !important; font-weight: 600 !important; }
+.nav-call:hover { background: var(--green-mid) !important; }
+.hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+.hamburger span { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; transition: all 0.3s; }
+
+/* ── HERO ── */
+#hero {
+  background: var(--green-dark);
+  padding: 70px 5% 60px;
+  position: relative; overflow: hidden;
+}
+#hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1599696848652-f0ff23bc911f?w=1600&q=80&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center 30%;
+  opacity: 0.18;
+  z-index: 0;
+}
+#hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(105deg, rgba(10,32,20,0.97) 0%, rgba(10,32,20,0.85) 50%, rgba(10,32,20,0.5) 100%);
+  z-index: 1;
+}
+.hero-grid { position: relative; z-index: 2; }
+.hero-grid {
+  display: grid; grid-template-columns: 1fr 420px;
+  gap: 4rem; align-items: center;
+  position: relative; z-index: 2; max-width: 1200px; margin: 0 auto;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 100px; padding: 6px 16px;
+  font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.9);
+  letter-spacing: 0.05em; margin-bottom: 1.5rem;
+}
+.hero-badge .dot { width: 6px; height: 6px; background: #4ade80; border-radius: 50%; animation: pulse 2s infinite; }
+.hero-h1 { font-size: clamp(2.2rem, 4.5vw, 3.8rem); font-weight: 800; color: white; line-height: 1.1; margin-bottom: 1.2rem; letter-spacing: -0.02em; }
+.hero-h1 span { color: #86efac; }
+.hero-p { font-size: 1.05rem; font-weight: 400; color: rgba(255,255,255,0.75); line-height: 1.75; margin-bottom: 2.5rem; max-width: 500px; }
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+.btn-primary { display: inline-flex; align-items: center; gap: 10px; background: white; color: var(--green); text-decoration: none; padding: 14px 28px; border-radius: 8px; font-size: 0.95rem; font-weight: 700; transition: all 0.2s; box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+.btn-secondary { display: inline-flex; align-items: center; gap: 10px; background: transparent; color: white; text-decoration: none; padding: 13px 24px; border-radius: 8px; font-size: 0.95rem; font-weight: 600; border: 1.5px solid rgba(255,255,255,0.3); transition: all 0.2s; }
+.btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.5); }
+.hero-trust { display: flex; gap: 2rem; flex-wrap: wrap; }
+.trust-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 600; color: rgba(255,255,255,0.8); }
+.trust-item svg { color: #86efac; flex-shrink: 0; }
+
+/* BOOKING CARD */
+.booking-card {
+  background: white; border-radius: 16px;
+  padding: 2rem; box-shadow: var(--shadow-lg);
+}
+.booking-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+.booking-card p { font-size: 0.82rem; color: var(--text-light); margin-bottom: 1.5rem; }
+.form-field { margin-bottom: 1rem; }
+.form-field label { display: block; font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 6px; letter-spacing: 0.01em; }
+.form-field input, .form-field select, .form-field textarea {
+  width: 100%; padding: 12px 16px;
+  border: 2px solid var(--border); border-radius: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; color: var(--text);
+  background: white; transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none; min-height: var(--min-touch);
+}
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--focus); box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+.form-field textarea { resize: vertical; min-height: 70px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.btn-book {
+  width: 100%; padding: 16px; background: var(--green); color: white;
+  border: none; border-radius: 8px; font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin-top: 0.75rem; min-height: var(--min-touch);
+}
+.btn-book:hover { background: var(--green-mid); transform: translateY(-1px); }
+.btn-book.success { background: #16a34a; }
+
+/* ── TRUST BAR ── */
+.trust-bar {
+  background: var(--green-pale); border-top: 1px solid #c8e6d0; border-bottom: 1px solid #c8e6d0;
+  padding: 16px 5%;
+}
+.trust-bar-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+}
+.trust-pill {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; font-weight: 600; color: #0f4020;
+}
+.trust-pill svg { color: var(--green-light); flex-shrink: 0; }
+.trust-divider { width: 1px; height: 28px; background: #b8d9c2; }
+
+/* ── SECTION SHARED ── */
+.section { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
+.section-full { padding: 80px 5%; }
+.sec-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 0.75rem; }
+.sec-tag::before { content: ''; width: 24px; height: 2px; background: var(--green-light); display: block; }
+.sec-h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; color: var(--text); line-height: 1.15; letter-spacing: -0.02em; }
+.sec-h2 span { color: var(--green); }
+.sec-sub { font-size: 0.95rem; color: var(--text-light); line-height: 1.75; margin-top: 0.75rem; max-width: 560px; }
+
+/* ── SERVICES ── */
+#services { background: var(--off-white); }
+.services-inner { max-width: 1200px; margin: 0 auto; padding: 80px 5%; }
+.services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem; }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.svc-card {
+  background: white; border-radius: 12px; padding: 2rem;
+  border: 1.5px solid var(--border); transition: all 0.25s;
+  display: flex; flex-direction: column; gap: 1rem;
+}
+.svc-card:hover { border-color: var(--green-light); transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.svc-icon { width: 48px; height: 48px; background: var(--green-pale); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--green); flex-shrink: 0; }
+.svc-card h3 { font-size: 1rem; font-weight: 700; color: var(--text); }
+.svc-card p { font-size: 0.84rem; color: var(--text-light); line-height: 1.65; flex: 1; }
+.svc-card .svc-link { font-size: 0.8rem; font-weight: 600; color: var(--green); text-decoration: none; display: flex; align-items: center; gap: 4px; transition: gap 0.2s; }
+.svc-card:hover .svc-link { gap: 8px; }
+
+/* ── AREAS ── */
+#areas { background: white; }
+.areas-inner { max-width: 1200px; margin: 0 auto; padding: 80px 5%; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.areas-map {
+  background: var(--green-pale); border-radius: 16px; padding: 2.5rem;
+  border: 1.5px solid #c8e6d0; position: relative; overflow: hidden;
+}
+.areas-map::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(34,160,82,0.08) 0%, transparent 70%); }
+.areas-title { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px; }
+.areas-title svg { color: var(--green-light); }
+.suburbs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+.suburb-tag {
+  display: flex; align-items: center; gap: 6px;
+  background: white; border: 1.5px solid #b8d4c0; border-radius: 6px;
+  padding: 10px 12px; font-size: 0.88rem; font-weight: 500; color: var(--text-mid);
+  transition: all 0.2s; min-height: var(--min-touch);
+}
+.suburb-tag:hover { border-color: var(--green-light); color: var(--green); background: var(--green-pale); }
+.suburb-tag::before { content: ''; width: 6px; height: 6px; background: var(--green-light); border-radius: 50%; flex-shrink: 0; }
+.areas-more { margin-top: 1rem; font-size: 0.78rem; color: var(--text-light); text-align: center; padding-top: 1rem; border-top: 1px solid #c8e6d0; }
+.areas-more strong { color: var(--green); }
+
+/* ── REVIEWS ── */
+#reviews { background: var(--off-white); }
+.reviews-inner { max-width: 1200px; margin: 0 auto; padding: 80px 5%; }
+.reviews-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem; }
+.google-rating { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.g-stars { color: #f5c842; font-size: 1.2rem; letter-spacing: 2px; }
+.g-label { font-size: 0.9rem; color: var(--text-mid); font-weight: 600; }
+.reviews-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+.rev-card {
+  background: white; border-radius: 12px; padding: 2rem;
+  border: 1.5px solid var(--border); transition: all 0.25s; position: relative;
+}
+.rev-card:hover { border-color: var(--green-light); box-shadow: var(--shadow); }
+.rev-card::before { content: '"'; position: absolute; top: 1rem; right: 1.5rem; font-size: 5rem; line-height: 1; color: var(--green-pale); font-family: Georgia, serif; pointer-events: none; }
+.rev-stars { color: #f5c842; font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 1rem; }
+.rev-text { font-size: 0.9rem; line-height: 1.8; color: var(--text-mid); margin-bottom: 1.5rem; position: relative; z-index: 1; }
+.rev-author { display: flex; align-items: center; gap: 10px; }
+.rev-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; color: white; flex-shrink: 0; }
+.rev-name { font-size: 0.85rem; font-weight: 700; color: var(--text); }
+.rev-via { font-size: 0.72rem; color: var(--text-light); }
+.verified-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.78rem; font-weight: 600; color: #0f4020; background: var(--green-pale); padding: 4px 10px; border-radius: 100px; margin-top: 3px; }
+
+/* ── SHOWCASE STRIP ── */
+.showcase-strip { background: var(--off-white); padding: 0; overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.showcase-inner { display: grid; grid-template-columns: repeat(4, 1fr); height: 220px; }
+.showcase-item { position: relative; overflow: hidden; }
+.showcase-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; display: block; }
+.showcase-item:hover img { transform: scale(1.06); }
+.showcase-caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(10,32,20,0.85)); color: white; padding: 1.5rem 1rem 0.75rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.03em; }
+@media (max-width: 768px) { .showcase-inner { grid-template-columns: repeat(2, 1fr); height: 300px; } }
+@media (max-width: 480px) { .showcase-inner { grid-template-columns: 1fr 1fr; height: 240px; } }
+
+/* ── WHY PHOTO ── */
+.why-photo-wrap { position: relative; border-radius: 14px; overflow: hidden; margin-bottom: 0; box-shadow: 0 16px 48px rgba(0,0,0,0.35); }
+.why-photo { width: 100%; height: 300px; object-fit: cover; display: block; border-radius: 14px; }
+.why-photo-badge { position: absolute; bottom: 1.25rem; left: 1.25rem; right: 1.25rem; background: rgba(10,32,20,0.92); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; color: white; }
+.why-photo-badge svg { color: #86efac; flex-shrink: 0; }
+.why-photo-badge strong { font-size: 0.9rem; font-weight: 700; display: block; }
+.why-photo-badge span { font-size: 0.78rem; color: rgba(255,255,255,0.55); }
+
+/* ── WHY ── */
+#why { background: var(--green-dark); }
+.why-inner { max-width: 1200px; margin: 0 auto; padding: 80px 5%; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+.why-left h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; color: white; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 1rem; }
+.why-left h2 span { color: #86efac; }
+.why-left p { font-size: 0.95rem; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 2rem; }
+.why-features { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.why-feat { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 1.5rem; transition: all 0.25s; }
+.why-feat:hover { background: rgba(255,255,255,0.08); border-color: rgba(134,239,172,0.3); }
+.why-feat-icon { font-size: 1.5rem; margin-bottom: 0.75rem; display: block; }
+.why-feat h4 { font-size: 0.88rem; font-weight: 700; color: white; margin-bottom: 0.4rem; }
+.why-feat p { font-size: 0.78rem; color: rgba(255,255,255,0.45); line-height: 1.6; }
+
+/* ── BOOKING ── */
+#booking { background: var(--off-white); }
+.booking-inner { max-width: 1200px; margin: 0 auto; padding: 80px 5%; display: grid; grid-template-columns: 1fr 480px; gap: 5rem; align-items: start; }
+.booking-left h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; color: var(--text); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 1rem; }
+.booking-left h2 span { color: var(--green); }
+.booking-left p { font-size: 0.95rem; color: var(--text-light); line-height: 1.8; margin-bottom: 2rem; }
+.booking-steps { display: flex; flex-direction: column; gap: 1.25rem; }
+.booking-step { display: flex; align-items: flex-start; gap: 1rem; }
+.step-num { width: 32px; height: 32px; background: var(--green); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; }
+.step-text h4 { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem; }
+.step-text p { font-size: 0.8rem; color: var(--text-light); line-height: 1.6; }
+.booking-form-card { background: white; border-radius: 16px; padding: 2.5rem; box-shadow: var(--shadow-lg); border: 1.5px solid var(--border); }
+.booking-form-card h3 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+.booking-form-card .form-sub { font-size: 0.82rem; color: var(--text-light); margin-bottom: 1.75rem; }
+.success-msg { display: none; background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 10px; padding: 1.5rem; text-align: center; }
+.success-msg h4 { font-size: 1rem; font-weight: 700; color: #16a34a; margin-bottom: 0.4rem; }
+.success-msg p { font-size: 0.85rem; color: #166534; }
+
+/* ── FOOTER ── */
+footer { background: var(--green-dark); padding: 60px 5% 30px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; }
+.footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+.footer-brand p { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.75; margin-top: 1rem; max-width: 280px; }
+.footer-col h4 { font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 1rem; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.footer-col a { font-size: 0.9rem; color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.2s; }
+.footer-col a:hover { color: #86efac; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.footer-bottom p { font-size: 0.85rem; color: rgba(255,255,255,0.6); }
+.licence-badge { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 10px 16px; font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.85); letter-spacing: 0.03em; }
+
+/* MOBILE CALL BAR */
+.mob-call { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 200; }
+.mob-call-inner { display: grid; grid-template-columns: 1fr 1fr; }
+.mob-call a { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 18px 16px; font-size: 1rem; font-weight: 700; text-decoration: none; letter-spacing: 0.03em; min-height: 56px; }
+.mob-call .call { background: var(--green); color: white; }
+.mob-call .emergency { background: var(--red); color: white; }
+
+/* MOBILE MENU */
+.mob-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--green-dark); z-index: 200; padding: 1.5rem 5%; flex-direction: column; }
+.mob-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; }
+.mob-menu-close { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+.mob-menu nav-links-mob { display: flex; flex-direction: column; gap: 0; }
+.mob-menu a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 1.4rem; font-weight: 700; padding: 1.2rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); display: block; transition: color 0.2s; }
+.mob-menu a:hover { color: #86efac; }
+.mob-menu .mob-cta { margin-top: 2rem; background: var(--green-light); color: white !important; border-radius: 10px; padding: 16px !important; text-align: center; border: none !important; }
+
+/* REVEAL - not hidden from screen readers, only visual */
+.reveal { opacity: 0; transform: translateY(25px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+/* Screen reader only utility */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .booking-card { display: none; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .footer-brand { grid-column: 1 / -1; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .mob-call { display: block; }
+  section, .section-full { padding-bottom: 90px !important; }
+  footer { padding-bottom: 80px; }
+  .services-grid { grid-template-columns: 1fr; }
+  .areas-inner { grid-template-columns: 1fr; }
+  .reviews-grid { grid-template-columns: 1fr; }
+  .why-inner { grid-template-columns: 1fr; }
+  .booking-inner { grid-template-columns: 1fr; }
+  .trust-bar-inner { justify-content: center; }
+  .trust-divider { display: none; }
+  .hero-trust { gap: 1rem; }
+  .footer-top { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .why-features { grid-template-columns: 1fr; }
+  .suburbs-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .hero-h1 { font-size: 2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- EMERGENCY BAR -->
+<div class="emergency-bar">
+  <p><span class="pulse"></span> 24/7 Emergency Service Available — We Answer Every Call</p>
+  <a href="#" id="emergency-btn" class="emergency-btn" aria-label="Call for 24/7 emergency service">📞 Emergency Call</a>
+</div>
+
+<!-- NAV -->
+<nav role="navigation" aria-label="Main navigation">
+  <a href="#hero" class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/>
+        <line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/>
+      </svg>
+    </div>
+    <div class="nav-logo-text">
+      <span class="nav-logo-name" id="nav-name">JTD Air-Con</span>
+      <span class="nav-logo-sub" id="nav-sub">Air-Conditioning & Refrigeration</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#areas">Service Areas</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#booking">Book</a></li>
+    <li><a href="#contact" id="nav-call" class="nav-call">📞 Call Now</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="mobMenu" aria-label="Open menu"><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span></button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu" role="dialog" aria-label="Mobile navigation menu" aria-modal="true">
+  <div class="mob-menu-header">
+    <span style="color:white;font-size:1.1rem;font-weight:700" id="mob-logo">JTD Air-Con</span>
+    <button class="mob-menu-close" onclick="closeMenu()">✕</button>
+  </div>
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#areas" onclick="closeMenu()">Service Areas</a>
+  <a href="#reviews" onclick="closeMenu()">Reviews</a>
+  <a href="#booking" onclick="closeMenu()">Book a Job</a>
+  <a href="#" id="mob-menu-phone" onclick="closeMenu()" class="mob-cta">📞 Call Now</a>
+</div>
+
+<!-- HERO -->
+<main id="main-content">
+<section id="hero" aria-label="Introduction">
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="hero-badge reveal"><span class="dot"></span><span id="hero-badge-txt">Serving Metro Area</span></div>
+      <h1 class="hero-h1 reveal">Your Local<br><span id="hero-industry-title">Air-Con &amp;<br>Refrigeration</span><br>Experts</h1>
+      <p class="hero-p reveal" id="hero-p">Professional installation, servicing and repairs. Quality work guaranteed — done right the first time, every time.</p>
+      <div class="hero-btns reveal">
+        <a href="#" id="hero-call-btn" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.35 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.13.7.32 1.38.56 2.05a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.67.24 1.35.43 2.05.56A2 2 0 0 1 22 16.92z"/></svg>
+          <span id="hero-phone-txt">Call Now</span>
+        </a>
+        <a href="#booking" class="btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Book a Job
+        </a>
+      </div>
+      <div class="hero-trust reveal">
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span id="trust-years">Est. & Experienced</span>
+        </div>
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Fully Insured
+        </div>
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          24/7 Emergency
+        </div>
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          5★ Google Rated
+        </div>
+      </div>
+    </div>
+    <!-- BOOKING CARD (desktop hero) -->
+    <div class="booking-card reveal">
+      <h3>Book a Job</h3>
+      <p>Get a callback within 2 hours</p>
+      <div class="form-field">
+        <label for="hf-name">Your Name</label>
+        <input type="text" placeholder="John Smith" id="hf-name" autocomplete="name">
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="hf-phone">Phone</label>
+          <input type="tel" placeholder="04XX XXX XXX" id="hf-phone" autocomplete="tel">
+        </div>
+        <div class="form-field">
+          <label for="hf-date">Preferred Date</label>
+          <input type="date" id="hf-date">
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="hf-service">Service Needed</label>
+        <select id="hf-service" aria-required="true">
+          <option value="">Select a service...</option>
+          <option>Split System Installation</option>
+          <option>Split System Service</option>
+          <option>Refrigeration</option>
+          <option>Maintenance & Repairs</option>
+          <option>Emergency Call-Out</option>
+          <option>Other / Not Sure</option>
+        </select>
+      </div>
+      <button class="btn-book" id="hero-book-btn" onclick="submitHeroForm()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Request Booking
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-bar-inner">
+    <div class="trust-pill">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Fully Licensed & Insured
+    </div>
+    <div class="trust-divider"></div>
+    <div class="trust-pill">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      24/7 Emergency Response
+    </div>
+    <div class="trust-divider"></div>
+    <div class="trust-pill">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      5-Star Google Reviews
+    </div>
+    <div class="trust-divider"></div>
+    <div class="trust-pill">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+      <span id="trust-bar-years">Local & Experienced</span>
+    </div>
+    <div class="trust-divider"></div>
+    <div class="trust-pill">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span id="trust-bar-area">Metro Area</span>
+    </div>
+  </div>
+</div>
+
+<!-- WORK SHOWCASE STRIP -->
+<div class="showcase-strip" aria-label="Examples of our work">
+  <div class="showcase-inner">
+    <div class="showcase-item">
+      <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&q=80&auto=format&fit=crop" alt="Split system air conditioning unit mounted on wall" loading="lazy">
+      <div class="showcase-caption">Split System Install</div>
+    </div>
+    <div class="showcase-item">
+      <img src="https://images.unsplash.com/photo-1606206873764-fd15e242cb24?w=600&q=80&auto=format&fit=crop" alt="HVAC technician servicing air conditioning system" loading="lazy">
+      <div class="showcase-caption">Professional Servicing</div>
+    </div>
+    <div class="showcase-item">
+      <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80&auto=format&fit=crop" alt="Commercial refrigeration unit" loading="lazy">
+      <div class="showcase-caption">Commercial Refrigeration</div>
+    </div>
+    <div class="showcase-item">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80&auto=format&fit=crop" alt="Modern home with quality air conditioning installation" loading="lazy">
+      <div class="showcase-caption">Quality Workmanship</div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services" aria-labelledby="services-heading">
+  <div class="services-inner">
+    <div class="services-header reveal">
+      <div>
+        <div class="sec-tag">What We Do</div>
+        <h2 class="sec-h2" id="services-heading">Our <span>Services</span></h2>
+        <p class="sec-sub" id="svc-sub">Professional solutions for homes and businesses across the metro area.</p>
+      </div>
+    </div>
+    <div class="services-grid" id="svc-grid"></div>
+  </div>
+</section>
+
+<!-- SERVICE AREAS -->
+<section id="areas" aria-labelledby="areas-heading">
+  <div class="areas-inner">
+    <div class="reveal">
+      <div class="sec-tag">Where We Work</div>
+      <h2 class="sec-h2" id="areas-heading">Service <span>Areas</span></h2>
+      <p class="sec-sub" style="margin-bottom:2rem" id="areas-sub">We cover the full metro area and surrounding suburbs. Not sure if we cover your area? Give us a call.</p>
+      <a href="#" id="areas-call-btn" class="btn-primary" style="display:inline-flex;gap:10px;text-decoration:none;padding:13px 24px;border-radius:8px;background:var(--green);color:white;font-weight:700;font-size:0.9rem;transition:all 0.2s">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.35 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.13.7.32 1.38.56 2.05a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.67.24 1.35.43 2.05.56A2 2 0 0 1 22 16.92z"/></svg>
+        Check Your Area
+      </a>
+    </div>
+    <div class="areas-map reveal">
+      <div class="areas-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Suburbs We Cover
+      </div>
+      <div class="suburbs-grid" id="suburbs-grid"></div>
+      <p class="areas-more">And many more — <strong>call to confirm your suburb</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" aria-labelledby="reviews-heading">
+  <div class="reviews-inner">
+    <div class="reviews-header reveal">
+      <div>
+        <div class="sec-tag">What Customers Say</div>
+        <h2 class="sec-h2" id="reviews-heading">Real <span>Reviews</span></h2>
+      </div>
+      <div class="google-rating">
+        <div class="g-stars" aria-hidden="true">★★★★★</div>
+        <div class="g-label" id="g-label">5.0 · Google Reviews</div>
+      </div>
+    </div>
+    <div class="reviews-grid" id="rev-grid"></div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why" aria-labelledby="why-heading">
+  <div class="why-inner">
+    <div class="reveal">
+      <div class="why-photo-wrap">
+        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80&auto=format&fit=crop" alt="Professional tradesperson working on site" loading="lazy" class="why-photo">
+        <div class="why-photo-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <div><strong>Licensed & Insured</strong><br><span>Professional every time</span></div>
+        </div>
+      </div>
+      <div class="sec-tag" style="color:#86efac;margin-top:2rem">Why Choose Us</div>
+      <h2 id="why-heading" style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;color:white;line-height:1.15;letter-spacing:-0.02em;margin-bottom:1rem">The <span style="color:#86efac">JTD</span> Difference</h2>
+      <p style="font-size:0.95rem;color:rgba(255,255,255,0.55);line-height:1.8;margin-bottom:2rem" id="why-p">We're not just here to get the job done — we're here to get it done properly. Every customer deserves honesty, quality and a tradie who actually shows up.</p>
+      <a href="#booking" class="btn-primary" style="display:inline-flex;gap:10px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book a Job Today
+      </a>
+    </div>
+    <div class="why-features">
+      <div class="why-feat reveal"><span class="why-feat-icon">🏆</span><h4>Highly Professional</h4><p>Punctual, respectful and focused on doing the job right.</p></div>
+      <div class="why-feat reveal"><span class="why-feat-icon">✅</span><h4>Quality Guaranteed</h4><p>Neat installs, high standard work — inside and out.</p></div>
+      <div class="why-feat reveal"><span class="why-feat-icon">💬</span><h4>Clear Communication</h4><p>We explain everything — no jargon, no hidden surprises.</p></div>
+      <div class="why-feat reveal"><span class="why-feat-icon">🔁</span><h4>Trusted by Families</h4><p>Repeat customers across every home in the family.</p></div>
+      <div class="why-feat reveal"><span class="why-feat-icon">🛡️</span><h4>Fully Insured</h4><p>Licensed and insured for complete peace of mind.</p></div>
+      <div class="why-feat reveal"><span class="why-feat-icon">⚡</span><h4>24/7 Emergency</h4><p>We're available when you need us most — day or night.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking" aria-labelledby="booking-heading">
+  <div class="booking-inner">
+    <div class="reveal">
+      <div class="sec-tag">Book a Job</div>
+      <h2 class="sec-h2" id="booking-heading" style="margin-bottom:1rem">Request a <span>Booking</span></h2>
+      <p style="font-size:0.95rem;color:var(--text-light);line-height:1.8;margin-bottom:2.5rem">Fill in the form and we'll get back to you within 2 hours to confirm your booking. Prefer to call? We're available 24/7.</p>
+      <div class="booking-steps">
+        <div class="booking-step"><div class="step-num">1</div><div class="step-text"><h4>Submit your request</h4><p>Tell us what you need and when suits you.</p></div></div>
+        <div class="booking-step"><div class="step-num">2</div><div class="step-text"><h4>We'll confirm within 2 hours</h4><p>A real person will call you back to lock in the time.</p></div></div>
+        <div class="booking-step"><div class="step-num">3</div><div class="step-text"><h4>We show up on time</h4><p>Fully equipped, ready to get the job done right.</p></div></div>
+      </div>
+    </div>
+    <div class="booking-form-card reveal">
+      <h3>Book a Job</h3>
+      <p class="form-sub">We'll call you back within 2 hours</p>
+      <div id="book-form">
+        <div class="form-field">
+          <label for="bf-name">Full Name <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+          <input type="text" placeholder="John Smith" id="bf-name" required aria-required="true" autocomplete="name">
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Phone *</label>
+            <input type="tel" placeholder="04XX XXX XXX" id="bf-phone">
+          </div>
+          <div class="form-field">
+            <label>Email</label>
+            <input type="email" placeholder="you@email.com" id="bf-email">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Preferred Date *</label>
+            <input type="date" id="bf-date">
+          </div>
+          <div class="form-field">
+            <label>Preferred Time</label>
+            <select id="bf-time">
+              <option value="">Any time</option>
+              <option>Morning (7am–12pm)</option>
+              <option>Afternoon (12pm–5pm)</option>
+              <option>Evening (5pm–8pm)</option>
+              <option>Emergency — ASAP</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-field">
+          <label>Service Required *</label>
+          <select id="bf-service">
+            <option value="">Select a service...</option>
+            <option>Split System Installation</option>
+            <option>Split System Service</option>
+            <option>Refrigeration</option>
+            <option>Maintenance & Repairs</option>
+            <option>Emergency Call-Out</option>
+            <option>Other / Not Sure</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="bf-suburb">Suburb / Address</label>
+          <input type="text" placeholder="e.g. Northside, Brisbane" id="bf-suburb" autocomplete="address-level2">
+        </div>
+        <div class="form-field">
+          <label for="bf-notes">Additional Notes</label>
+          <textarea placeholder="Describe the issue or job..." id="bf-notes"></textarea>
+        </div>
+        <button class="btn-book" onclick="submitBookingForm()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Submit Booking Request
+        </button>
+      </div>
+      <div class="success-msg" id="book-success" role="alert" aria-live="polite">
+        <h4>✅ Booking Request Received!</h4>
+        <p>Thanks! We'll call you back within 2 hours to confirm your booking.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer id="contact" role="contentinfo" aria-label="Footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="nav-logo" style="text-decoration:none">
+          <div class="nav-logo-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg></div>
+          <div class="nav-logo-text"><span class="nav-logo-name" id="footer-name">JTD Air-Con</span><span class="nav-logo-sub">Air-Conditioning & Refrigeration</span></div>
+        </div>
+        <p id="footer-p">Professional air-conditioning installation, servicing and refrigeration across the metro area. Available 24/7 for emergencies.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul id="footer-svc-list"></ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="#" id="footer-phone-link">📞 Loading...</a></li>
+          <li><a href="#booking">📅 Book a Job</a></li>
+          <li><a href="#areas">📍 Service Areas</a></li>
+          <li><a href="#" id="footer-emergency">🚨 24/7 Emergency</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 <span id="footer-biz-name">JTD Air-Conditioning & Refrigeration</span>. All rights reserved.</p>
+      <div class="licence-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Licensed & Fully Insured
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- MOBILE CALL BAR -->
+<div class="mob-call">
+  <div class="mob-call-inner">
+    <a href="#" id="mob-call-btn" class="call" aria-label="Call us now">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.35 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.13.7.32 1.38.56 2.05a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.67.24 1.35.43 2.05.56A2 2 0 0 1 22 16.92z"/></svg>
+      <span id="mob-phone-txt">Call Now</span>
+    </a>
+    <a href="#" id="mob-emergency-btn" class="emergency" aria-label="24/7 emergency call">
+      🚨 Emergency
+    </a>
+  </div>
+</div>
+
+<script>
+// ── DEFAULTS ──
+const DEFAULTS = {
+  name: "JTD Air-Conditioning & Refrigeration",
+  short: "JTD Air-Con",
+  phone: "0427078054",
+  location: "Metro Area",
+  industry: "air conditioning & refrigeration",
+  years: "Experienced",
+  suburbs: ["Northside","Southside","Eastside","Westside","CBD","Inner North","Inner South","Inner East","Inner West","Northern Suburbs","Southern Suburbs","Eastern Suburbs"],
+  reviews: [
+    { text: "Very happy with the service that was provided, highly recommend.", author: "XZ", initials: "XZ", color: "#155c2e" },
+    { text: "Very professional and respectful! Does incredible quality work — JTD will have you sorted! Thank you JTD for your awesome work, I'm stoked!", author: "Mase One", initials: "MO", color: "#1a7a3c" },
+    { text: "Could not recommend JTD more! Highly professional. Has done multiple services on all my family's split systems and always explains things clearly. Installed a new split in my home and ensured it was done to a high standard and looked great both inside and out.", author: "Monique Tenaglia", initials: "MT", color: "#0d5c24" },
+    { text: "JTD installed 2 flawless aircons at our recording studio. Highly recommended and super professional! 10/10 👌🏼", author: "Brnz", initials: "B", color: "#22a052" }
+  ],
+  services: [
+    { title: "Split System Installation", desc: "Neat, professional installs inside and out. Tidily routed, perfectly positioned, beautifully finished." },
+    { title: "Split System Servicing", desc: "Keep your system running at peak efficiency. We service all brands and explain everything clearly." },
+    { title: "Refrigeration", desc: "Commercial and domestic refrigeration solutions installed and maintained to the highest standard." },
+    { title: "New Installations", desc: "New builds or upgrades — we'll supply and install the perfect system for your home or business." },
+    { title: "Maintenance & Repairs", desc: "Fast diagnosis and repairs. Preventative maintenance packages available to keep systems running." },
+    { title: "24/7 Emergency Service", desc: "System failed at midnight? We're available around the clock for emergency call-outs." }
+  ]
+};
+
+const ICONS = [
+  `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="3" width="20" height="7" rx="1"/><path d="M12 10v11"/><path d="M9 21h6"/></svg>`,
+  `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+  `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 12h8"/><path d="M12 8v8"/><circle cx="12" cy="12" r="10"/></svg>`,
+  `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+  `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+  `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`
+];
+
+function getParams() {
+  const p = new URLSearchParams(window.location.search);
+  const g = k => p.get(k) ? decodeURIComponent(p.get(k)) : null;
+  let reviews = [], services = [], suburbs = [];
+  for (let i = 1; i <= 6; i++) { const t = g(`r${i}_text`), a = g(`r${i}_author`); if (t && a) reviews.push({ text: t, author: a, initials: a.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2), color: '#155c2e' }); }
+  for (let i = 1; i <= 8; i++) { const t = g(`s${i}_title`), d = g(`s${i}_desc`); if (t) services.push({ title: t, desc: d || '' }); }
+  for (let i = 1; i <= 16; i++) { const s = g(`sub${i}`); if (s) suburbs.push(s); }
+  return {
+    name: g('name') || DEFAULTS.name,
+    short: g('short') || (g('name') ? g('name').split(' ').slice(0,2).join(' ') : DEFAULTS.short),
+    phone: g('phone') || DEFAULTS.phone,
+    location: g('location') || DEFAULTS.location,
+    industry: g('industry') || DEFAULTS.industry,
+    years: g('years') || DEFAULTS.years,
+    suburbs: suburbs.length ? suburbs : DEFAULTS.suburbs,
+    reviews: reviews.length ? reviews : DEFAULTS.reviews,
+    services: services.length ? services : DEFAULTS.services,
+  };
+}
+
+function fmtPhone(p) { const d = p.replace(/\D/g,''); return d.length === 10 ? `${d.slice(0,4)} ${d.slice(4,7)} ${d.slice(7)}` : p; }
+
+function build() {
+  const d = getParams();
+  const tel = `tel:${d.phone.replace(/\D/g,'')}`;
+  const ph = fmtPhone(d.phone);
+  const short = d.short;
+
+  document.title = d.name;
+  document.getElementById('nav-name').textContent = short;
+  document.getElementById('hero-badge-txt').textContent = `Serving ${d.location}`;
+  document.getElementById('hero-p').textContent = `Professional ${d.industry} installation, servicing and repairs. Quality work guaranteed — done right the first time, every time.`;
+  document.getElementById('hero-phone-txt').textContent = ph;
+  document.getElementById('hero-call-btn').href = tel;
+  document.getElementById('trust-years').textContent = d.years;
+  document.getElementById('trust-bar-years').textContent = d.years;
+  document.getElementById('trust-bar-area').textContent = d.location;
+  document.getElementById('areas-sub').textContent = `We cover ${d.location} and surrounding suburbs. Not sure if we cover your area? Give us a call.`;
+  document.getElementById('areas-call-btn').href = tel;
+  document.getElementById('g-label').textContent = `5.0 · ${d.reviews.length} Google Reviews`;
+  document.getElementById('why-p').textContent = `We're not just here to get the job done — we're here to get it done properly. Every customer deserves honesty, quality and a tradie who actually shows up.`;
+  document.getElementById('nav-call').href = tel;
+  document.getElementById('footer-name').textContent = short;
+  document.getElementById('footer-biz-name').textContent = d.name;
+  document.getElementById('footer-phone-link').textContent = `📞 ${ph}`;
+  document.getElementById('footer-phone-link').href = tel;
+  document.getElementById('footer-emergency').href = tel;
+  document.getElementById('mob-call-btn').href = tel;
+  document.getElementById('mob-phone-txt').textContent = ph;
+  document.getElementById('mob-emergency-btn').href = tel;
+  document.getElementById('emergency-btn').href = tel;
+  document.getElementById('mob-menu-phone').href = tel;
+  document.getElementById('mob-menu-phone').textContent = `📞 ${ph}`;
+  document.getElementById('mob-logo').textContent = short;
+
+  // Services grid
+  document.getElementById('svc-grid').innerHTML = d.services.map((s,i) => `
+    <div class="svc-card reveal">
+      <div class="svc-icon">${ICONS[i % ICONS.length]}</div>
+      <h3>${s.title}</h3>
+      <p>${s.desc}</p>
+      <a href="#booking" class="svc-link">Book this service →</a>
+    </div>`).join('');
+
+  // Footer services
+  document.getElementById('footer-svc-list').innerHTML = d.services.slice(0,4).map(s => `<li><a href="#services">${s.title}</a></li>`).join('');
+
+  // Suburbs
+  document.getElementById('suburbs-grid').innerHTML = d.suburbs.slice(0,12).map(s => `<div class="suburb-tag">${s}</div>`).join('');
+
+  // Reviews
+  document.getElementById('rev-grid').innerHTML = d.reviews.map(r => `
+    <div class="rev-card reveal">
+      <div class="rev-stars" aria-hidden="true">★★★★★</div><span class="sr-only">5 out of 5 stars</span>
+      <p class="rev-text">"${r.text}"</p>
+      <div class="rev-author">
+        <div class="rev-avatar" style="background:${r.color}">${r.initials}</div>
+        <div>
+          <div class="rev-name">${r.author}</div>
+          <div class="rev-via">
+            <span class="verified-badge">✓ Verified Google Review</span>
+          </div>
+        </div>
+      </div>
+    </div>`).join('');
+
+  setTimeout(() => document.querySelectorAll('.reveal').forEach(el => obs.observe(el)), 60);
+}
+
+// ── SCROLL REVEAL ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 60); obs.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// ── HAMBURGER ──
+const hbg = document.getElementById('hamburger'), mob = document.getElementById('mobMenu');
+let mOpen = false;
+hbg.addEventListener('click', () => { mOpen = !mOpen; mob.style.display = mOpen ? 'flex' : 'none'; hbg.setAttribute('aria-expanded', mOpen); });
+function closeMenu() { mOpen = false; mob.style.display = 'none'; hbg.setAttribute('aria-expanded', 'false'); }
+
+// ── FORMS ──
+function submitHeroForm() {
+  const name = document.getElementById('hf-name').value;
+  const phone = document.getElementById('hf-phone').value;
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  const btn = document.getElementById('hero-book-btn');
+  btn.classList.add('success');
+  btn.innerHTML = '✅ Request Sent! We\'ll call you soon.';
+  btn.disabled = true;
+}
+
+function submitBookingForm() {
+  const name = document.getElementById('bf-name').value;
+  const phone = document.getElementById('bf-phone').value;
+  const service = document.getElementById('bf-service').value;
+  if (!name || !phone || !service) { alert('Please fill in your name, phone number and service required.'); return; }
+  document.getElementById('book-form').style.display = 'none';
+  document.getElementById('book-success').style.display = 'block';
+}
+
+// ── SET MIN DATE ──
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('hf-date').min = today;
+document.getElementById('bf-date').min = today;
+
+build();
+</script>
+</body>
+</html>

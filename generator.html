@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo Link Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --green: #145228;
+  --green-light: #1e8c44;
+  --green-pale: #e6f4ec;
+  --white: #ffffff;
+  --off-white: #f6faf7;
+  --text: #111111;
+  --text-mid: #333;
+  --text-light: #595959;
+  --border: #d0dbd4;
+  --focus: #2563eb;
+  --red: #c0392b;
+  --shadow: 0 2px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+}
+html { font-size: 16px; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--off-white); color: var(--text); min-height: 100vh; }
+
+/* HEADER */
+header { background: #0a2014; padding: 0 5%; height: 64px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.header-logo { font-size: 1.1rem; font-weight: 800; color: white; letter-spacing: 0.01em; }
+.header-logo span { color: #4ade80; }
+.header-sub { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+
+/* LAYOUT */
+.page { max-width: 780px; margin: 0 auto; padding: 2.5rem 5% 6rem; }
+
+/* PROGRESS */
+.progress-bar { display: flex; gap: 0; margin-bottom: 2.5rem; border-radius: 10px; overflow: hidden; border: 1.5px solid var(--border); }
+.progress-step { flex: 1; padding: 12px 8px; text-align: center; font-size: 0.78rem; font-weight: 600; color: var(--text-light); background: white; transition: all 0.2s; cursor: pointer; border-right: 1.5px solid var(--border); }
+.progress-step:last-child { border-right: none; }
+.progress-step.active { background: var(--green); color: white; }
+.progress-step.done { background: var(--green-pale); color: var(--green); }
+.step-num { display: block; font-size: 1rem; font-weight: 800; margin-bottom: 2px; }
+
+/* CARDS */
+.card { background: white; border-radius: 14px; padding: 2rem; border: 1.5px solid var(--border); margin-bottom: 1.5rem; box-shadow: var(--shadow); }
+.card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; padding-bottom: 1.25rem; border-bottom: 1.5px solid var(--border); }
+.card-icon { width: 40px; height: 40px; background: var(--green-pale); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--green); flex-shrink: 0; }
+.card-title { font-size: 1.05rem; font-weight: 700; color: var(--text); }
+.card-desc { font-size: 0.82rem; color: var(--text-light); margin-top: 2px; }
+
+/* FORM FIELDS */
+.field { margin-bottom: 1.25rem; }
+.field label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.field input, .field select, .field textarea {
+  width: 100%; padding: 12px 16px;
+  border: 2px solid var(--border); border-radius: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; color: var(--text);
+  background: white; outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--focus); box-shadow: 0 0 0 3px rgba(37,99,235,0.12); }
+.field textarea { resize: vertical; min-height: 80px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.field-hint { font-size: 0.78rem; color: var(--text-light); margin-top: 4px; }
+
+/* STEP SECTIONS */
+.step-section { display: none; }
+.step-section.active { display: block; }
+
+/* DYNAMIC LIST */
+.dynamic-list { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem; }
+.dynamic-item { display: grid; gap: 0.75rem; background: var(--off-white); border: 1.5px solid var(--border); border-radius: 10px; padding: 1.25rem; position: relative; }
+.dynamic-item.review-item { grid-template-columns: 1fr; }
+.dynamic-item.service-item { grid-template-columns: 1fr 1fr; }
+.dynamic-item.suburb-item { grid-template-columns: 1fr auto; align-items: center; }
+.remove-btn { background: #fee2e2; border: none; color: var(--red); width: 32px; height: 32px; border-radius: 6px; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; flex-shrink: 0; }
+.remove-btn:hover { background: #fecaca; }
+.add-btn { display: flex; align-items: center; gap: 8px; background: var(--green-pale); border: 1.5px dashed #a3d4b4; color: var(--green); padding: 12px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; width: 100%; justify-content: center; transition: all 0.2s; font-family: 'Plus Jakarta Sans', sans-serif; }
+.add-btn:hover { background: #d1eedd; border-color: var(--green-light); }
+
+/* NAV BUTTONS */
+.nav-btns { display: flex; gap: 1rem; justify-content: space-between; align-items: center; margin-top: 2rem; }
+.btn-back { background: white; border: 2px solid var(--border); color: var(--text-mid); padding: 13px 28px; border-radius: 8px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.btn-back:hover { border-color: var(--green); color: var(--green); }
+.btn-next { background: var(--green); border: none; color: white; padding: 13px 32px; border-radius: 8px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
+.btn-next:hover { background: #186b33; transform: translateY(-1px); }
+
+/* RESULT */
+.result-card { background: #0a2014; border-radius: 14px; padding: 2rem; margin-bottom: 1.5rem; }
+.result-label { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 0.75rem; }
+.result-url { background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 14px 16px; font-size: 0.78rem; color: #86efac; word-break: break-all; line-height: 1.6; font-family: monospace; margin-bottom: 1.25rem; min-height: 60px; }
+.btn-copy { width: 100%; padding: 15px; background: #1e8c44; border: none; color: white; border-radius: 8px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.btn-copy:hover { background: #22a052; }
+.btn-copy.copied { background: #16a34a; }
+.result-summary { background: white; border-radius: 12px; padding: 1.5rem; border: 1.5px solid var(--border); }
+.result-summary h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 1rem; color: var(--text); }
+.summary-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+.summary-row:last-child { border-bottom: none; }
+.summary-label { color: var(--text-light); font-weight: 500; }
+.summary-val { color: var(--text); font-weight: 600; text-align: right; max-width: 60%; }
+.btn-restart { width: 100%; padding: 13px; background: white; border: 2px solid var(--border); color: var(--text-mid); border-radius: 8px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-top: 1rem; }
+.btn-restart:hover { border-color: var(--green); color: var(--green); }
+
+/* HOW TO USE */
+.how-to { background: var(--green-pale); border: 1.5px solid #a3d4b4; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+.how-to h3 { font-size: 0.9rem; font-weight: 700; color: var(--green); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+.how-steps { display: flex; flex-direction: column; gap: 0.6rem; }
+.how-step { display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; color: #1a5c30; }
+.how-step-num { width: 22px; height: 22px; background: var(--green); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+/* focus */
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+
+@media (max-width: 600px) {
+  .field-row { grid-template-columns: 1fr; }
+  .dynamic-item.service-item { grid-template-columns: 1fr; }
+  .progress-step { font-size: 0.65rem; padding: 10px 4px; }
+  .step-num { font-size: 0.85rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-logo">Demo <span>Generator</span></div>
+  <div class="header-sub">Tradie Website Tool</div>
+</header>
+
+<div class="page">
+
+  <!-- HOW TO -->
+  <div class="how-to">
+    <h3>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      How to use this tool
+    </h3>
+    <div class="how-steps">
+      <div class="how-step"><div class="how-step-num">1</div><span>Fill in the client's business details across 4 simple steps</span></div>
+      <div class="how-step"><div class="how-step-num">2</div><span>Hit Generate — your personalised demo link is ready</span></div>
+      <div class="how-step"><div class="how-step-num">3</div><span>Copy the link and send it to the client</span></div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar" role="tablist" aria-label="Form steps">
+    <div class="progress-step active" id="tab-1" onclick="goToStep(1)">
+      <span class="step-num">1</span>Business
+    </div>
+    <div class="progress-step" id="tab-2" onclick="goToStep(2)">
+      <span class="step-num">2</span>Services
+    </div>
+    <div class="progress-step" id="tab-3" onclick="goToStep(3)">
+      <span class="step-num">3</span>Areas
+    </div>
+    <div class="progress-step" id="tab-4" onclick="goToStep(4)">
+      <span class="step-num">4</span>Reviews
+    </div>
+    <div class="progress-step" id="tab-5" onclick="goToStep(5)">
+      <span class="step-num">5</span>Generate
+    </div>
+  </div>
+
+  <!-- STEP 1: BUSINESS -->
+  <div class="step-section active" id="step-1">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div>
+          <div class="card-title">Business Details</div>
+          <div class="card-desc">The basics about the client's business</div>
+        </div>
+      </div>
+      <div class="field">
+        <label for="f-name">Full Business Name *</label>
+        <input type="text" id="f-name" placeholder="e.g. JTD Air-Conditioning & Refrigeration">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="f-short">Short Name (for nav bar)</label>
+          <input type="text" id="f-short" placeholder="e.g. JTD Air-Con">
+          <div class="field-hint">Shown in navigation — keep it brief</div>
+        </div>
+        <div class="field">
+          <label for="f-phone">Phone Number *</label>
+          <input type="tel" id="f-phone" placeholder="e.g. 0427 078 054">
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="f-location">Service Location</label>
+          <input type="text" id="f-location" placeholder="e.g. Brisbane, QLD">
+        </div>
+        <div class="field">
+          <label for="f-years">Years / Experience</label>
+          <input type="text" id="f-years" placeholder="e.g. 10+ Years Experience">
+          <div class="field-hint">Shown as a trust signal</div>
+        </div>
+      </div>
+      <div class="field">
+        <label for="f-industry">Industry / Trade</label>
+        <select id="f-industry">
+          <option value="air conditioning & refrigeration">Air Conditioning & Refrigeration</option>
+          <option value="plumbing">Plumbing</option>
+          <option value="electrical">Electrical</option>
+          <option value="cleaning">Cleaning</option>
+          <option value="landscaping">Landscaping</option>
+          <option value="building & construction">Building & Construction</option>
+          <option value="painting">Painting</option>
+          <option value="roofing">Roofing</option>
+        </select>
+      </div>
+    </div>
+    <div class="nav-btns">
+      <div></div>
+      <button class="btn-next" onclick="nextStep(1)">
+        Next — Services
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 2: SERVICES -->
+  <div class="step-section" id="step-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <div>
+          <div class="card-title">Services</div>
+          <div class="card-desc">What does the client offer? Add up to 6 services</div>
+        </div>
+      </div>
+      <div class="dynamic-list" id="services-list"></div>
+      <button class="add-btn" onclick="addService()" id="add-service-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add a Service
+      </button>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-back" onclick="prevStep(2)">← Back</button>
+      <button class="btn-next" onclick="nextStep(2)">
+        Next — Service Areas
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 3: AREAS -->
+  <div class="step-section" id="step-3">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <div class="card-title">Service Areas</div>
+          <div class="card-desc">Which suburbs do they cover? Add up to 12</div>
+        </div>
+      </div>
+      <div class="dynamic-list" id="suburbs-list"></div>
+      <button class="add-btn" onclick="addSuburb()" id="add-suburb-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add a Suburb
+      </button>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-back" onclick="prevStep(3)">← Back</button>
+      <button class="btn-next" onclick="nextStep(3)">
+        Next — Reviews
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 4: REVIEWS -->
+  <div class="step-section" id="step-4">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div>
+          <div class="card-title">Customer Reviews</div>
+          <div class="card-desc">Paste their Google reviews — up to 4</div>
+        </div>
+      </div>
+      <div class="dynamic-list" id="reviews-list"></div>
+      <button class="add-btn" onclick="addReview()" id="add-review-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add a Review
+      </button>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-back" onclick="prevStep(4)">← Back</button>
+      <button class="btn-next" onclick="nextStep(4)" style="background:#1e8c44">
+        ✨ Generate Demo Link
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 5: RESULT -->
+  <div class="step-section" id="step-5">
+    <div class="result-card">
+      <div class="result-label">Your Demo Link</div>
+      <div class="result-url" id="result-url">Generating...</div>
+      <button class="btn-copy" id="copy-btn" onclick="copyLink()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy Demo Link
+      </button>
+    </div>
+    <div class="result-summary">
+      <h3>📋 Summary</h3>
+      <div class="summary-row"><span class="summary-label">Business</span><span class="summary-val" id="sum-name">—</span></div>
+      <div class="summary-row"><span class="summary-label">Phone</span><span class="summary-val" id="sum-phone">—</span></div>
+      <div class="summary-row"><span class="summary-label">Location</span><span class="summary-val" id="sum-location">—</span></div>
+      <div class="summary-row"><span class="summary-label">Services</span><span class="summary-val" id="sum-services">—</span></div>
+      <div class="summary-row"><span class="summary-label">Suburbs</span><span class="summary-val" id="sum-suburbs">—</span></div>
+      <div class="summary-row"><span class="summary-label">Reviews</span><span class="summary-val" id="sum-reviews">—</span></div>
+    </div>
+    <button class="btn-restart" onclick="restart()">← Start a New Client</button>
+  </div>
+
+</div>
+
+<script>
+const BASE_URL = 'https://demomastergithub-io.vercel.app/';
+let currentStep = 1;
+
+// ── STEP NAV ──
+function goToStep(n) {
+  document.querySelectorAll('.step-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.progress-step').forEach(s => s.classList.remove('active'));
+  document.getElementById(`step-${n}`).classList.add('active');
+  document.getElementById(`tab-${n}`).classList.add('active');
+  currentStep = n;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function nextStep(from) {
+  if (from === 1) {
+    if (!document.getElementById('f-name').value.trim()) { alert('Please enter the business name.'); return; }
+    if (!document.getElementById('f-phone').value.trim()) { alert('Please enter the phone number.'); return; }
+  }
+  // Mark done
+  document.getElementById(`tab-${from}`).classList.remove('active');
+  document.getElementById(`tab-${from}`).classList.add('done');
+  if (from === 4) { generateLink(); }
+  goToStep(from + 1);
+}
+
+function prevStep(from) {
+  document.getElementById(`tab-${from}`).classList.remove('active', 'done');
+  goToStep(from - 1);
+}
+
+// ── SERVICES ──
+let serviceCount = 0;
+const defaultServices = [
+  { title: 'Split System Installation', desc: 'Neat, professional installs inside and out to a high standard.' },
+  { title: 'Split System Servicing', desc: 'Keep your system running efficiently. All brands serviced.' },
+  { title: 'Refrigeration', desc: 'Commercial and domestic refrigeration installed and maintained.' },
+];
+
+function addService(title = '', desc = '') {
+  if (serviceCount >= 6) return;
+  serviceCount++;
+  const id = serviceCount;
+  const list = document.getElementById('services-list');
+  const div = document.createElement('div');
+  div.className = 'dynamic-item service-item';
+  div.id = `svc-item-${id}`;
+  div.innerHTML = `
+    <div class="field" style="margin:0">
+      <label for="svc-title-${id}">Service Name</label>
+      <input type="text" id="svc-title-${id}" placeholder="e.g. Split System Installation" value="${title}">
+    </div>
+    <div class="field" style="margin:0">
+      <label for="svc-desc-${id}">Short Description</label>
+      <input type="text" id="svc-desc-${id}" placeholder="e.g. All brands serviced..." value="${desc}">
+    </div>
+    <button class="remove-btn" onclick="removeItem('svc-item-${id}', 'serviceCount', 'add-service-btn', 6)" aria-label="Remove service" style="grid-column:2;justify-self:end">✕</button>`;
+  list.appendChild(div);
+  if (serviceCount >= 6) document.getElementById('add-service-btn').style.display = 'none';
+}
+
+// ── SUBURBS ──
+let suburbCount = 0;
+function addSuburb(val = '') {
+  if (suburbCount >= 12) return;
+  suburbCount++;
+  const id = suburbCount;
+  const list = document.getElementById('suburbs-list');
+  const div = document.createElement('div');
+  div.className = 'dynamic-item suburb-item';
+  div.id = `sub-item-${id}`;
+  div.innerHTML = `
+    <div class="field" style="margin:0">
+      <label for="sub-${id}">Suburb Name</label>
+      <input type="text" id="sub-${id}" placeholder="e.g. Northside" value="${val}">
+    </div>
+    <button class="remove-btn" onclick="removeItem('sub-item-${id}', 'suburbCount', 'add-suburb-btn', 12)" aria-label="Remove suburb" style="margin-top:24px">✕</button>`;
+  list.appendChild(div);
+  if (suburbCount >= 12) document.getElementById('add-suburb-btn').style.display = 'none';
+}
+
+// ── REVIEWS ──
+let reviewCount = 0;
+function addReview(text = '', author = '') {
+  if (reviewCount >= 4) return;
+  reviewCount++;
+  const id = reviewCount;
+  const list = document.getElementById('reviews-list');
+  const div = document.createElement('div');
+  div.className = 'dynamic-item review-item';
+  div.id = `rev-item-${id}`;
+  div.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem">
+      <span style="font-size:0.8rem;font-weight:700;color:var(--text-light)">Review ${id}</span>
+      <button class="remove-btn" onclick="removeItem('rev-item-${id}', 'reviewCount', 'add-review-btn', 4)" aria-label="Remove review">✕</button>
+    </div>
+    <div class="field" style="margin:0 0 0.75rem">
+      <label for="rev-text-${id}">Review Text</label>
+      <textarea id="rev-text-${id}" placeholder="Paste the review text here...">${text}</textarea>
+    </div>
+    <div class="field" style="margin:0">
+      <label for="rev-author-${id}">Reviewer Name</label>
+      <input type="text" id="rev-author-${id}" placeholder="e.g. John Smith" value="${author}">
+    </div>`;
+  list.appendChild(div);
+  if (reviewCount >= 4) document.getElementById('add-review-btn').style.display = 'none';
+}
+
+// ── REMOVE ITEM ──
+function removeItem(itemId, countVar, btnId, max) {
+  document.getElementById(itemId).remove();
+  if (countVar === 'serviceCount') serviceCount--;
+  else if (countVar === 'suburbCount') suburbCount--;
+  else if (countVar === 'reviewCount') reviewCount--;
+  document.getElementById(btnId).style.display = 'flex';
+}
+
+// ── GENERATE LINK ──
+function generateLink() {
+  const p = new URLSearchParams();
+  const name = document.getElementById('f-name').value.trim();
+  const short = document.getElementById('f-short').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const location = document.getElementById('f-location').value.trim();
+  const years = document.getElementById('f-years').value.trim();
+  const industry = document.getElementById('f-industry').value;
+
+  if (name) p.set('name', name);
+  if (short) p.set('short', short);
+  if (phone) p.set('phone', phone);
+  if (location) p.set('location', location);
+  if (years) p.set('years', years);
+  if (industry) p.set('industry', industry);
+
+  // Services
+  let svcCount = 0;
+  document.querySelectorAll('[id^="svc-title-"]').forEach(el => {
+    const id = el.id.replace('svc-title-', '');
+    const title = el.value.trim();
+    const desc = document.getElementById(`svc-desc-${id}`)?.value.trim() || '';
+    if (title) { svcCount++; p.set(`s${svcCount}_title`, title); if (desc) p.set(`s${svcCount}_desc`, desc); }
+  });
+
+  // Suburbs
+  let subCount = 0;
+  document.querySelectorAll('[id^="sub-"]').forEach(el => {
+    if (!el.id.match(/^sub-\d+$/)) return;
+    const val = el.value.trim();
+    if (val) { subCount++; p.set(`sub${subCount}`, val); }
+  });
+
+  // Reviews
+  let revCount = 0;
+  document.querySelectorAll('[id^="rev-text-"]').forEach(el => {
+    const id = el.id.replace('rev-text-', '');
+    const text = el.value.trim();
+    const author = document.getElementById(`rev-author-${id}`)?.value.trim() || '';
+    if (text && author) { revCount++; p.set(`r${revCount}_text`, text); p.set(`r${revCount}_author`, author); }
+  });
+
+  const url = BASE_URL + '?' + p.toString();
+  document.getElementById('result-url').textContent = url;
+
+  // Summary
+  document.getElementById('sum-name').textContent = name || '—';
+  document.getElementById('sum-phone').textContent = phone || '—';
+  document.getElementById('sum-location').textContent = location || '—';
+  document.getElementById('sum-services').textContent = svcCount ? `${svcCount} service${svcCount > 1 ? 's' : ''}` : 'Default services';
+  document.getElementById('sum-suburbs').textContent = subCount ? `${subCount} suburb${subCount > 1 ? 's' : ''}` : 'Not specified';
+  document.getElementById('sum-reviews').textContent = revCount ? `${revCount} review${revCount > 1 ? 's' : ''}` : 'Default reviews';
+}
+
+// ── COPY ──
+function copyLink() {
+  const url = document.getElementById('result-url').textContent;
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.classList.add('copied');
+    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Demo Link`;
+    }, 3000);
+  });
+}
+
+// ── RESTART ──
+function restart() {
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-short').value = '';
+  document.getElementById('f-phone').value = '';
+  document.getElementById('f-location').value = '';
+  document.getElementById('f-years').value = '';
+  document.getElementById('services-list').innerHTML = '';
+  document.getElementById('suburbs-list').innerHTML = '';
+  document.getElementById('reviews-list').innerHTML = '';
+  serviceCount = 0; suburbCount = 0; reviewCount = 0;
+  document.getElementById('add-service-btn').style.display = 'flex';
+  document.getElementById('add-suburb-btn').style.display = 'flex';
+  document.getElementById('add-review-btn').style.display = 'flex';
+  document.querySelectorAll('.progress-step').forEach(s => s.classList.remove('active', 'done'));
+  goToStep(1);
+  addDefaultServices();
+}
+
+// ── DEFAULTS ──
+function addDefaultServices() {
+  defaultServices.forEach(s => addService(s.title, s.desc));
+}
+
+// ── INIT ──
+addDefaultServices();
+</script>
+</body>
+</html>
